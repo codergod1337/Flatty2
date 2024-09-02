@@ -28,12 +28,43 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Text = "Form1";
+            label1 = new System.Windows.Forms.Label();
+            chatMessageBox = new System.Windows.Forms.TextBox();
+            SuspendLayout();
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Location = new System.Drawing.Point(21, 561);
+            label1.Name = "label1";
+            label1.Size = new System.Drawing.Size(124, 25);
+            label1.TabIndex = 0;
+            label1.Text = "chat message:";
+            // 
+            // chatMessageBox
+            // 
+            chatMessageBox.Location = new System.Drawing.Point(151, 558);
+            chatMessageBox.Name = "chatMessageBox";
+            chatMessageBox.Size = new System.Drawing.Size(898, 31);
+            chatMessageBox.TabIndex = 1;
+            chatMessageBox.KeyDown += SendChatMessage;
+            // 
+            // Form1
+            // 
+            AutoScaleDimensions = new System.Drawing.SizeF(10F, 25F);
+            AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            ClientSize = new System.Drawing.Size(1200, 650);
+            Controls.Add(chatMessageBox);
+            Controls.Add(label1);
+            Name = "Form1";
+            Text = "Form1";
+            ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
+
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.TextBox chatMessageBox;
     }
 }
