@@ -1,5 +1,6 @@
 ﻿using Flattiverse.Connector.Events;
 using Flattiverse.Connector.GalaxyHierarchy;
+using Flattiverse.Connector.Units;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -16,7 +17,7 @@ namespace Flatty2
         public Galaxy? GalaxyOne { get; private set; }
         public Galaxy? GalaxyTwo { get; private set; }
         public static int GalTick;
-
+        public static List<Unit> _Unit = new List<Unit>();
         //List<Task> tasks = new List<Task>();
 
         public async Task DoGalaxyOneUpdate()
@@ -30,6 +31,7 @@ namespace Flatty2
             catch (Exception ex)
             {
                 Debug.WriteLine($"Fehler bei der Verbindung zu GalaxyOne: {ex.Message}");
+
             }
         }
         public async void DoGalaxyTwoUpdate()
@@ -49,7 +51,10 @@ namespace Flatty2
 
         public async Task CheckEvents()
         {
+            Chat chat = new Chat();
             FlattiverseEvent? TheEvent;
+           
+            
 
             try
             {
@@ -64,27 +69,37 @@ namespace Flatty2
                         //Debug.WriteLine(GalTick);
                         try
                         {
-                            //for (int i = 0; i < 1; i++)
-                            //{
-                            //    GalaxyOne.Chat("Thomas SPAMMT");
-                            //}
+                            //GalaxyOne.Chat("Thomas SPAMMT - aber nur zum testen!");                            
                         }
                         finally { }
                     }
                     else if (TheEvent.Kind == EventKind.ChatGalaxy) 
                     { 
                         GalaxyChatPlayerEvent g = (GalaxyChatPlayerEvent) TheEvent;
-                        Debug.WriteLine($"Galaxy, {g.Player.Name} sabbelt: {g.Message}"); 
+                        Debug.WriteLine($"Galaxy, {g.Player.Name}: {g.Message}");
+                        chat.AddChatMessage($"Galaxy, {g.Player.Name}: {g.Message}");
                     }                    
                     else if (TheEvent.Kind == EventKind.ChatPlayer) 
                     { 
                         ChatPlayerEvent g = (ChatPlayerEvent) TheEvent;
-                        Debug.WriteLine($"private, {g.Player.Name} sabbelt: {g.Message}"); 
+                        Debug.WriteLine($"private, {g.Player.Name} sabbelt: {g.Message}");
+                        chat.AddChatMessage($"{g.Player.Name}: {g.Message}");
+                    }
+                    else if (TheEvent.Kind == EventKind.NewUnit)
+                    {
+                        Debug.WriteLine("unit added");
+                        NewUnitFlattiverseEvent g = (NewUnitFlattiverseEvent) TheEvent ;
+                        
+                        _Unit.Add(g.Unit);
+                        
+                        foreach (Unit u  in _Unit) { Debug.WriteLine($"X: {u.Position.X} + kind: {u.Kind.ToString()}"); }
                     }
                     else { 
                         Debug.WriteLine($"({GalTick}) { TheEvent.Kind.ToString()}");
+                        Debug.WriteLine(TheEvent.ToString());
                         
                     }
+
                     
                 }
                     

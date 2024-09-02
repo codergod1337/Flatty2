@@ -28,8 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             label1 = new System.Windows.Forms.Label();
             chatMessageBox = new System.Windows.Forms.TextBox();
+            refresh = new System.Windows.Forms.Timer(components);
             SuspendLayout();
             // 
             // label1
@@ -49,6 +51,11 @@
             chatMessageBox.TabIndex = 1;
             chatMessageBox.KeyDown += SendChatMessage;
             // 
+            // refresh
+            // 
+            refresh.Enabled = true;
+            refresh.Tick += refresh_Tick;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(10F, 25F);
@@ -58,6 +65,7 @@
             Controls.Add(label1);
             Name = "Form1";
             Text = "Form1";
+            Paint += OnPaint;
             ResumeLayout(false);
             PerformLayout();
         }
@@ -66,5 +74,6 @@
 
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox chatMessageBox;
+        private System.Windows.Forms.Timer refresh;
     }
 }
